@@ -1,9 +1,8 @@
-package optout
+package sms
 
 import (
 	"fmt"
 	"net/http"
-	"sms-marketing-with-sdk/internal/campaign"
 	"strings"
 )
 
@@ -12,7 +11,7 @@ func HandleIncomingSMS(w http.ResponseWriter, r *http.Request) {
 	from := r.FormValue("From")
 	body := strings.TrimSpace(strings.ToLower(r.FormValue("Body")))
 
-	customer := campaign.FindCustomer(from)
+	customer := FindCustomer(from)
 	if customer == nil {
 		fmt.Printf("Customer with phone number %s not found\n", from)
 		http.Error(w, "Customer not found", http.StatusNotFound)

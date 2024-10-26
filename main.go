@@ -5,15 +5,14 @@ import (
 	"log"
 	"net/http"
 	"sms-marketing-with-sdk/config"
-	"sms-marketing-with-sdk/internal/campaign"
-	"sms-marketing-with-sdk/internal/optout"
+	"sms-marketing-with-sdk/sms"
 )
 
 func main() {
 	config.LoadEnv()
 
 	http.HandleFunc("/send-campaign", sendCampaignHandler)
-	http.HandleFunc("/process-reply", optout.HandleIncomingSMS)
+	http.HandleFunc("/process-reply", sms.HandleIncomingSMS)
 
 	fmt.Println("Server is running on port 8080...")
 	log.Fatal(http.ListenAndServe(":8080", nil))
@@ -22,7 +21,7 @@ func main() {
 
 func sendCampaignHandler(w http.ResponseWriter, r *http.Request) {
 	message := "Exclusive Offer: Get 20% off your next purchase!"
-	if err := campaign.SendMarketingCampaign(message); err != nil {
+	if err := sms.SendMarketingCampaign(message); err != nil {
 		http.Error(w, "Failed to send campaign", http.StatusInternalServerError)
 		return
 	}

@@ -1,9 +1,8 @@
-package campaign
+package sms
 
 import (
 	"fmt"
 	"log"
-	"sms-marketing-with-sdk/internal/sms"
 )
 
 type Customer struct {
@@ -30,7 +29,7 @@ func FindCustomer(phone string) *Customer {
 func SendMarketingCampaign(message string) error {
 	for _, customer := range Customers {
 		if !customer.OptedOut {
-			err := sms.SendSMS(customer.PhoneNumber, message)
+			err := SendSMS(customer.PhoneNumber, message)
 			if err != nil {
 				log.Printf("Failed to send SMS to %s: %v\n", customer.PhoneNumber, err)
 				return fmt.Errorf("failed to send campaign: %w", err)
