@@ -11,14 +11,12 @@ type Customer struct {
 }
 
 var Customers = []*Customer{
-	{PhoneNumber: "+447776736645", OptedOut: false},
+	{PhoneNumber: "+1234567889", OptedOut: false},
 	{PhoneNumber: "+0987654321", OptedOut: true},
 }
 
 func FindCustomer(phone string) *Customer {
-	fmt.Println(phone, "PASSED NUMBER")
 	for _, customer := range Customers {
-		fmt.Println(customer.PhoneNumber, "PHONE NUMBER")
 		if customer.PhoneNumber == phone {
 			return customer
 		}
