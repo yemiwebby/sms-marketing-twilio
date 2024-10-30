@@ -11,11 +11,12 @@ import (
 func main() {
 	config.LoadEnv()
 
-	http.HandleFunc("/send-campaign", sendCampaignHandler)
-	http.HandleFunc("/process-reply", sms.HandleIncomingSMS)
+	mux := http.NewServeMux()
+	mux.HandleFunc("/send-campaign", sendCampaignHandler)
+	mux.HandleFunc("/process-reply", sms.HandleIncomingSMS)
 
 	fmt.Println("Server is running on port 8080...")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":8080", mux))
 }
 
 
